@@ -150,6 +150,18 @@ export default {
 
           // 关闭 loading
           this.loginLoading = false;
+
+          // 将接口返回的用户相关数据放到本地存储 方面应用数据
+          // 本地存储只能存字符串
+          // 如果需要存储对象，数组类型的数据 需要把他们转化成 JSON 格式字符串进行存储
+          // JSON.stringify 把对象转换成字符串 可以还原
+          window.localStorage.setItem("user", JSON.stringify(res.data.data));
+
+          // 跳转到首页
+          // this.$router.push("/");
+          this.$router.push({
+            name: "home",
+          });
         })
         .catch((err) => {
           this.$message.error("登陆失败，手机号或验证码错误");
