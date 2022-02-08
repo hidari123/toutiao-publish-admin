@@ -9,6 +9,7 @@
     text-color="#fff"
     active-text-color="#ffd04b"
     router
+    :collapse="isCollapse"
   >
     <el-menu-item index="/">
       <i class="el-icon-s-home"></i>
@@ -42,17 +43,27 @@
 </template>
 
 <script>
+// 导入eventBus
+import eventBus from "@/eventBus.js";
+
 export default {
   name: "AppAside",
   components: {},
   props: {},
   data() {
-    return {};
+    return {
+      isCollapse: false,
+    };
   },
   computed: {},
   watch: {},
   created() {},
-  mounted() {},
+  mounted() {
+    eventBus.$on("isCollapse", (message) => {
+      //一些操作，message就是从Header组件传过来的值
+      this.isCollapse = message;
+    });
+  },
   methods: {},
 };
 </script>
