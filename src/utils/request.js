@@ -2,6 +2,7 @@
  * 基于 axios 封装的请求模块
  */
 import axios from "axios";
+import JSONbig from "json-bigint";
 
 // axios()
 // axios.get()
@@ -12,7 +13,25 @@ import axios from "axios";
 const request = axios.create({
   baseURL: "http://api-toutiao-web.itheima.net", // 最新接口地址
 
-  // baseURL: 'http://ttapi.research.itcast.cn/' // 请求的基础路径
+  // 定制后端返回的原始数据的处理
+  // 参数 data 就是后端返回的原始数据 未处理的 JSON 格式
+  transformResponse: [
+    function (data) {
+      // axios 默认在内部使用 JSON.parse 来转换处理原始数据
+
+      // 后端返回的数据 可能不是 JSON 格式字符串
+      // 如果不是的话 那么 JSONbig.parse 调用就会报错
+      // 所以我们要使用 try-catch 来捕获异常 处理异常发生
+      try {
+        // 如果转换成功 直接返回
+        return JSONbig.parse(data);
+      } catch (err) {
+        // 转换失败了 进入这里
+        // 把数据原封不动的直接回给请求使用
+        return data;
+      }
+    },
+  ],
 });
 
 // 请求拦截器
