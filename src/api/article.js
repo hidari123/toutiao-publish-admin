@@ -1,4 +1,6 @@
 // 文章相关请求模块
+// POST Body data
+// GET Query params
 
 import request from "../utils/request";
 
@@ -33,6 +35,45 @@ export const deleteArticle = (articleId) => {
     method: "DELETE",
     // 接口文档中的写的路径参数需要在 url 中传递
     // 凡是看见接口路径中有的 :xxx 格式的字段，则需要传递路径参数
+    url: `/mp/v1_0/articles/${articleId}`,
+  });
+};
+
+/**
+ * 新建文章
+ */
+// 默认值放后面，不能跳过有默认值的参数传参
+export const addArticle = (data, draft = false) => {
+  return request({
+    method: "POST",
+    url: "/mp/v1_0/articles",
+    params: {
+      draft: draft, // 是否存为草稿 （true 为草稿）
+    },
+    data: data,
+  });
+};
+
+/**
+ * 编辑文章
+ */
+export const updateArticle = (articleId, data, draft = false) => {
+  return request({
+    method: "PUT",
+    url: `/mp/v1_0/articles/${articleId}`,
+    params: {
+      draft: draft, // 是否存为草稿 （true 为草稿）
+    },
+    data: data,
+  });
+};
+
+/**
+ * 获取指定文章
+ */
+export const getArticle = (articleId) => {
+  return request({
+    method: "GET",
     url: `/mp/v1_0/articles/${articleId}`,
   });
 };

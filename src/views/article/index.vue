@@ -123,6 +123,7 @@
               circle
               icon="el-icon-edit"
               type="primary"
+              @click="$router.push(`/publish?id=${scope.row.id}`)"
             ></el-button>
             <el-button
               size="mini"
@@ -219,7 +220,6 @@ export default {
         const { results, total_count: totalCount } = res.data.data;
         this.articles = results;
         this.totalCount = totalCount;
-        console.log(res);
         // 关闭加载中 loading
         this.loading = false;
       });
@@ -241,7 +241,7 @@ export default {
       })
         .then(() => {
           // 确认执行这里
-          deleteArticle(articleId).then((res) => {
+          deleteArticle(articleId.toString()).then((res) => {
             // 删除成功 更新当前页文章数据列表
             this.loadArticles(this.page);
           });
