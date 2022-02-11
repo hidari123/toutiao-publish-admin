@@ -40,7 +40,7 @@
 // 导入和user相关的接口
 import { getUserProfile } from "@/api/user.js";
 // 导入eventBus
-import eventBus from "@/eventBus.js";
+import eventBus from "@/utils/event-bus.js";
 
 export default {
   name: "AppHeader",
@@ -57,6 +57,15 @@ export default {
   created() {
     // 组件初始化好 请求获取用户资料
     this.loadUserProfile();
+    eventBus.$on("update-user", (data) => {
+      // 不要直接写 this.user = data
+      // 对象之间赋值的是引用 会导致相互影响的问题
+      this.user.name = data.name;
+      this.user.photo = data.photo;
+    });
+    eventBus.$on("update-photo", (data) => {
+      this.user.photo = data.photo;
+    });
   },
   mounted() {},
   methods: {

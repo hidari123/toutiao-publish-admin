@@ -77,3 +77,21 @@ export const getArticle = (articleId) => {
     url: `/mp/v1_0/articles/${articleId}`,
   });
 };
+
+/**
+ * 修改文章评论状态
+ */
+export const updateArticleStatus = (articleId, allowComment) => {
+  return request({
+    method: "PUT",
+    url: "/mp/v1_0/comments/status",
+    params: {
+      // 对象属性名 不受代码规范限制
+      // 代码格式规范 变量名需要驼峰写法
+      article_id: articleId,
+    },
+    data: {
+      allow_comment: allowComment,
+    },
+  });
+};

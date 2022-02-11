@@ -44,7 +44,7 @@
 
 <script>
 // 导入eventBus
-import eventBus from "@/eventBus.js";
+import eventBus from "@/utils/event-bus.js";
 
 export default {
   name: "AppAside",
